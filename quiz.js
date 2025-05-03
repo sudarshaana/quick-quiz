@@ -111,9 +111,15 @@ Please provide the complete JSON for the quiz.`;
 
     startQuiz() {
         try {
-            this.quizData = JSON.parse(this.quizJson.value);
+            // Clean the JSON input
+            let cleanedJson = this.quizJson.value
+                .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
+                .replace(/[\r\n\t]/g, '') // Remove line breaks and tabs
+                .trim(); // Remove leading/trailing whitespace
+
+            this.quizData = JSON.parse(cleanedJson);
             if (!this.validateQuizData()) {
-                alert('Invalid quiz data format');
+                alert('Invalid quiz data format. Please check that your JSON has the correct structure with questions, options, and answers.');
                 return;
             }
             this.quizData.instantAnswer = this.instantAnswerCheckbox.checked;
@@ -124,15 +130,24 @@ Please provide the complete JSON for the quiz.`;
             this.quizDialog.classList.remove('hidden');
             this.loadQuestion();
         } catch (error) {
-            alert('Invalid JSON format');
+            console.error('JSON Parse Error:', error);
+            alert('Invalid JSON format. Please check your input and try again. Make sure to use proper JSON syntax with double quotes for keys and strings.');
         }
     }
 
     validateQuizData() {
-        return this.quizData &&
-               Array.isArray(this.quizData.questions) &&
-               this.quizData.questions.length > 0 &&
-               this.quizData.questions.every(q => q.question && q.options && q.answer);
+        if (!this.quizData || !Array.isArray(this.quizData.questions)) {
+            return false;
+        }
+
+        return this.quizData.questions.every(question => {
+            return question &&
+                   typeof question.question === 'string' &&
+                   Array.isArray(question.options) &&
+                   question.options.length > 0 &&
+                   typeof question.answer === 'string' &&
+                   question.options.includes(question.answer);
+        });
     }
 
     loadQuestion() {
