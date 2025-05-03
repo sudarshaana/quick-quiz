@@ -1,0 +1,30 @@
+{
+    "questions": [
+        {
+            "question": "What is the capital of France?",
+            "options": ["London", "Berlin", "Paris", "Madrid"],
+            "answer": "Paris"
+        },
+        {
+            "question": "Which of these are programming languages?",
+            "options": ["Python", "HTML", "Java", "CSS"],
+            "answer": "Python"
+        },
+        {
+            "question": "The largest planet in our solar system is ____.",
+            "options": ["Mars", "Jupiter", "Saturn", "Venus"],
+            "answer": "Jupiter"
+        },
+        {
+            "question": "Which of these is not a primary color?",
+            "options": ["Red", "Green", "Blue", "Yellow"],
+            "answer": "Green"
+        },
+        {
+            "question": "Which planet is known as the Red Planet?",
+            "options": ["Venus", "Mars", "Jupiter", "Saturn"],
+            "answer": "Mars"
+        }
+    ],
+    "instantAnswer": false
+}
