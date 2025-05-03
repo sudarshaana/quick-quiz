@@ -77,14 +77,45 @@ body {
     background: #5a6268;
 }
 
+.input-group input,
+.input-group textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: #ffffff;
+    font-size: 1rem;
+    color: #333333;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: #666666;
+}
+
 #quizJson {
     width: 100%;
     height: 200px;
     padding: 15px;
     border-radius: 8px;
     border: none;
-    background: rgba(255, 255, 255, 0.9);
+    background: #ffffff;
     margin-bottom: 20px;
+    resize: vertical;
+    color: #333333;
+}
+
+#quizJson::placeholder {
+    color: #666666;
+}
+
+#generatedPrompt {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: #ffffff;
+    color: #333333;
     resize: vertical;
 }
 
@@ -218,20 +249,6 @@ body {
 .input-group label {
     color: var(--text-color);
     font-weight: 500;
-}
-
-.input-group input,
-.input-group textarea {
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
-}
-
-.input-group textarea {
-    min-height: 100px;
-    resize: vertical;
 }
 
 .prompt-instructions {
