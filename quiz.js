@@ -111,6 +111,9 @@ Please provide the complete JSON for the quiz.`;
 
     startQuiz() {
         try {
+            // Log the raw input for debugging
+            console.log('Raw Input:', this.quizJson.value);
+
             // Clean the JSON input
             let cleanedJson = this.quizJson.value
                 .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
@@ -122,10 +125,14 @@ Please provide the complete JSON for the quiz.`;
                 .replace(/\\"/g, '"') // Unescape quotes
                 .trim(); // Remove leading/trailing whitespace
 
+            // Log the cleaned JSON
+            console.log('Cleaned JSON:', cleanedJson);
+
             // Try to parse the cleaned JSON
             this.quizData = JSON.parse(cleanedJson);
 
             if (!this.validateQuizData()) {
+                console.error('Validation failed:', this.quizData);
                 alert('Invalid quiz data format. Please check that your JSON has the correct structure with questions, options, and answers.');
                 return;
             }
@@ -138,6 +145,8 @@ Please provide the complete JSON for the quiz.`;
             this.loadQuestion();
         } catch (error) {
             console.error('JSON Parse Error:', error);
+            console.error('Error stack:', error.stack);
+            console.error('Raw Input:', this.quizJson.value);
             console.error('Cleaned JSON:', this.quizJson.value
                 .replace(/[\u200B-\u200D\uFEFF]/g, '')
                 .replace(/[\r\n\t]/g, '')
@@ -147,7 +156,7 @@ Please provide the complete JSON for the quiz.`;
                 .replace(/([^\\])"/g, '$1\\"')
                 .replace(/\\"/g, '"')
                 .trim());
-            alert('Invalid JSON format. Please check your input and try again. Make sure to use proper JSON syntax with double quotes for keys and strings.', error);
+            alert('Invalid JSON format. Please check your input and try again. Make sure to use proper JSON syntax with double quotes for keys and strings.');
         }
     }
 
