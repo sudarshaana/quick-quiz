@@ -112,8 +112,13 @@ Please provide the complete JSON for the quiz.`;
 
     startQuiz() {
         try {
-            // Get the raw input
-            const rawInput = this.quizJson.value.trim();
+            // Get the raw input and remove all formatting
+            const rawInput = this.quizJson.value
+                .trim() // Remove leading/trailing whitespace
+                .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+                .replace(/\n/g, '') // Remove newlines
+                .replace(/\t/g, '') // Remove tabs
+                .trim(); // Final trim to ensure clean string
 
             // Basic validation
             if (!rawInput) {
