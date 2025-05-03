@@ -147,7 +147,7 @@ Please provide the complete JSON for the quiz.`;
                 .replace(/([^\\])"/g, '$1\\"')
                 .replace(/\\"/g, '"')
                 .trim());
-            alert('Invalid JSON format. Please check your input and try again. Make sure to use proper JSON syntax with double quotes for keys and strings.');
+            alert('Invalid JSON format. Please check your input and try again. Make sure to use proper JSON syntax with double quotes for keys and strings.', error);
         }
     }
 
