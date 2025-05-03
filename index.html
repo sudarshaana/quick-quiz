@@ -19,10 +19,35 @@
                     Show answers instantly
                 </label>
             </div>
-            <button id="generateBtn" class="btn">Generate Quiz</button>
+            <div class="button-group">
+                <button id="generateBtn" class="btn">Generate Quiz</button>
+                <button id="promptGeneratorBtn" class="btn secondary">Prompt Generator</button>
+            </div>
         </div>
 
         <div id="overlay" class="overlay hidden"></div>
+
+        <div id="promptDialog" class="prompt-dialog glass hidden">
+            <div class="dialog-header">
+                <h2>Generate Quiz Prompt</h2>
+                <button id="closePromptDialog" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="dialog-content">
+                <div class="input-group">
+                    <label for="topic">Topic:</label>
+                    <input type="text" id="topic" placeholder="Enter the topic for the quiz">
+                </div>
+                <div class="input-group">
+                    <label for="questionCount">Number of Questions:</label>
+                    <input type="number" id="questionCount" min="1" max="50" value="10">
+                </div>
+                <div class="input-group">
+                    <label for="generatedPrompt">Generated Prompt:</label>
+                    <textarea id="generatedPrompt" readonly></textarea>
+                </div>
+                <button id="copyPromptBtn" class="btn">Copy Prompt</button>
+            </div>
+        </div>
 
         <div id="quizDialog" class="quiz-dialog glass hidden">
             <div class="quiz-header">
@@ -39,7 +64,7 @@
 
             <div class="quiz-controls">
                 <button id="prevBtn" class="btn-icon"><i class="fas fa-chevron-left"></i></button>
-                <button id="showAnswerBtn" class="btn">Show Answer</button>
+                <!-- <button id="showAnswerBtn" class="btn">Show Answer</button> -->
                 <button id="nextBtn" class="btn-icon"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
