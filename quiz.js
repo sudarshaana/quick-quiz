@@ -94,6 +94,7 @@ Requirements:
 5. Include a mix of factual and conceptual questions
 6. Ensure the options are plausible and not obviously wrong
 7. The answer should be the exact text of the correct option
+8. Don't add double quotes within the question or options to avoid JSON errors
 
 Please provide the complete JSON for the quiz.`;
 
@@ -111,32 +112,25 @@ Please provide the complete JSON for the quiz.`;
 
     startQuiz() {
         try {
-            // Log the raw input for debugging
-            console.log('Raw Input:', this.quizJson.value);
+            // Get the raw input
+            const rawInput = this.quizJson.value.trim();
 
-            // Clean the JSON input - handle nested quotes
-            let cleanedJson = this.quizJson.value
-                .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
-                .replace(/[\r\n\t]/g, '') // Remove line breaks and tabs
-                .replace(/\s+/g, '') // Remove ALL whitespace
-                .replace(/([{,])([a-zA-Z0-9_]+):/g, '$1"$2":') // Add quotes around keys
-                .replace(/:([^"][^,}]*)([,}])/g, ':"$1"$2') // Add quotes around unquoted values
-                .replace(/'/g, '"') // Replace single quotes with double quotes
-                .replace(/"([^"]*)"([^"]*)"([^"]*)"/g, '"$1\\"$2\\"$3"') // Handle nested quotes
-                .replace(/"([^"]*)"([^"]*)"([^"]*)"/g, '"$1\\"$2\\"$3"') // Handle double nested quotes
-                .trim(); // Remove leading/trailing whitespace
+            // Basic validation
+            if (!rawInput) {
+                alert('Please enter some JSON data');
+                return;
+            }
 
-            // Log the cleaned JSON
-            console.log('Cleaned JSON:', cleanedJson);
+            // Try to parse the JSON directly
+            this.quizData = JSON.parse(rawInput);
 
-            // Try to parse the cleaned JSON
-            this.quizData = JSON.parse(cleanedJson);
-
+            // Validate the structure
             if (!this.validateQuizData()) {
-                console.error('Validation failed:', this.quizData);
                 alert('Invalid quiz data format. Please check that your JSON has the correct structure with questions, options, and answers.');
                 return;
             }
+
+            // Set up the quiz
             this.quizData.instantAnswer = this.instantAnswerCheckbox.checked;
             this.currentQuestionIndex = 0;
             this.userAnswers = new Array(this.quizData.questions.length).fill(null);
@@ -146,34 +140,45 @@ Please provide the complete JSON for the quiz.`;
             this.loadQuestion();
         } catch (error) {
             console.error('JSON Parse Error:', error);
-            console.error('Error stack:', error.stack);
-            console.error('Raw Input:', this.quizJson.value);
-            console.error('Cleaned JSON:', this.quizJson.value
-                .replace(/[\u200B-\u200D\uFEFF]/g, '')
-                .replace(/[\r\n\t]/g, '')
-                .replace(/\s+/g, '')
-                .replace(/([{,])([a-zA-Z0-9_]+):/g, '$1"$2":')
-                .replace(/:([^"][^,}]*)([,}])/g, ':"$1"$2')
-                .replace(/'/g, '"')
-                .replace(/"([^"]*)"([^"]*)"([^"]*)"/g, '"$1\\"$2\\"$3"')
-                .replace(/"([^"]*)"([^"]*)"([^"]*)"/g, '"$1\\"$2\\"$3"')
-                .trim());
             alert('Invalid JSON format. Please check your input and try again. Make sure to use proper JSON syntax with double quotes for keys and strings.');
         }
     }
 
     validateQuizData() {
+        // Check if quizData exists and has questions array
         if (!this.quizData || !Array.isArray(this.quizData.questions)) {
             return false;
         }
 
+        // Check each question
         return this.quizData.questions.every(question => {
-            return question &&
-                   typeof question.question === 'string' &&
-                   Array.isArray(question.options) &&
-                   question.options.length > 0 &&
-                   typeof question.answer === 'string' &&
-                   question.options.includes(question.answer);
+            // Check if question has required fields
+            if (!question || typeof question !== 'object') {
+                return false;
+            }
+
+            // Check question text
+            if (typeof question.question !== 'string' || !question.question.trim()) {
+                return false;
+            }
+
+            // Check options
+            if (!Array.isArray(question.options) || question.options.length === 0) {
+                return false;
+            }
+
+            // Check if all options are strings
+            if (!question.options.every(option => typeof option === 'string')) {
+                return false;
+            }
+
+            // Check answer
+            if (typeof question.answer !== 'string' || !question.answer.trim()) {
+                return false;
+            }
+
+            // Check if answer is one of the options
+            return question.options.includes(question.answer);
         });
     }
 
