@@ -114,7 +114,7 @@ Please provide the complete JSON for the quiz.`;
             // Log the raw input for debugging
             console.log('Raw Input:', this.quizJson.value);
 
-            // Clean the JSON input - remove all formatting whitespace
+            // Clean the JSON input - handle nested quotes
             let cleanedJson = this.quizJson.value
                 .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
                 .replace(/[\r\n\t]/g, '') // Remove line breaks and tabs
@@ -122,6 +122,8 @@ Please provide the complete JSON for the quiz.`;
                 .replace(/([{,])([a-zA-Z0-9_]+):/g, '$1"$2":') // Add quotes around keys
                 .replace(/:([^"][^,}]*)([,}])/g, ':"$1"$2') // Add quotes around unquoted values
                 .replace(/'/g, '"') // Replace single quotes with double quotes
+                .replace(/"([^"]*)"([^"]*)"([^"]*)"/g, '"$1\\"$2\\"$3"') // Handle nested quotes
+                .replace(/"([^"]*)"([^"]*)"([^"]*)"/g, '"$1\\"$2\\"$3"') // Handle double nested quotes
                 .trim(); // Remove leading/trailing whitespace
 
             // Log the cleaned JSON
@@ -153,6 +155,8 @@ Please provide the complete JSON for the quiz.`;
                 .replace(/([{,])([a-zA-Z0-9_]+):/g, '$1"$2":')
                 .replace(/:([^"][^,}]*)([,}])/g, ':"$1"$2')
                 .replace(/'/g, '"')
+                .replace(/"([^"]*)"([^"]*)"([^"]*)"/g, '"$1\\"$2\\"$3"')
+                .replace(/"([^"]*)"([^"]*)"([^"]*)"/g, '"$1\\"$2\\"$3"')
                 .trim());
             alert('Invalid JSON format. Please check your input and try again. Make sure to use proper JSON syntax with double quotes for keys and strings.');
         }
