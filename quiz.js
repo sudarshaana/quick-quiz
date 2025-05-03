@@ -115,9 +115,16 @@ Please provide the complete JSON for the quiz.`;
             let cleanedJson = this.quizJson.value
                 .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
                 .replace(/[\r\n\t]/g, '') // Remove line breaks and tabs
+                .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+                .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') // Add quotes around keys
+                .replace(/:\s*'([^']*)'/g, ':"$1"') // Replace single quotes with double quotes
+                .replace(/([^\\])"/g, '$1\\"') // Escape unescaped quotes
+                .replace(/\\"/g, '"') // Unescape quotes
                 .trim(); // Remove leading/trailing whitespace
 
+            // Try to parse the cleaned JSON
             this.quizData = JSON.parse(cleanedJson);
+
             if (!this.validateQuizData()) {
                 alert('Invalid quiz data format. Please check that your JSON has the correct structure with questions, options, and answers.');
                 return;
@@ -131,6 +138,15 @@ Please provide the complete JSON for the quiz.`;
             this.loadQuestion();
         } catch (error) {
             console.error('JSON Parse Error:', error);
+            console.error('Cleaned JSON:', this.quizJson.value
+                .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                .replace(/[\r\n\t]/g, '')
+                .replace(/\s+/g, ' ')
+                .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":')
+                .replace(/:\s*'([^']*)'/g, ':"$1"')
+                .replace(/([^\\])"/g, '$1\\"')
+                .replace(/\\"/g, '"')
+                .trim());
             alert('Invalid JSON format. Please check your input and try again. Make sure to use proper JSON syntax with double quotes for keys and strings.');
         }
     }
