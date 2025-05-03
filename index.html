@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Quiz</title>
+    <title>Quick Quiz</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="quiz-input glass">
-            <h2>Quiz Generator</h2>
+            <h2 style="padding: 10px;">Quick Quiz Generator</h2>
             <textarea id="quizJson" placeholder="Paste your quiz JSON here..."></textarea>
             <div class="quiz-options">
                 <label class="checkbox-container">
@@ -21,7 +21,7 @@
             </div>
             <div class="button-group">
                 <button id="generateBtn" class="btn">Generate Quiz</button>
-                <button id="promptGeneratorBtn" class="btn secondary">Prompt Generator</button>
+                <button id="promptGeneratorBtn" class="btn secondary">Generate Data</button>
             </div>
         </div>
 
@@ -35,17 +35,44 @@
             <div class="dialog-content">
                 <div class="input-group">
                     <label for="topic">Topic:</label>
-                    <input type="text" id="topic" placeholder="Enter the topic for the quiz">
+                    <input type="text" id="topic" placeholder="Enter topic for quiz">
                 </div>
                 <div class="input-group">
                     <label for="questionCount">Number of Questions:</label>
-                    <input type="number" id="questionCount" min="1" max="50" value="10">
+                    <input type="number" id="questionCount" value="10" min="1" max="50">
                 </div>
                 <div class="input-group">
                     <label for="generatedPrompt">Generated Prompt:</label>
                     <textarea id="generatedPrompt" readonly></textarea>
                 </div>
-                <button id="copyPromptBtn" class="btn">Copy Prompt</button>
+
+                <div class="dialog-actions">
+                    <button id="copyPromptBtn" class="btn">Copy Prompt</button>
+                    <button id="cancelPromptBtn" class="btn secondary">Cancel</button>
+                </div>
+                <div class="prompt-instructions">
+                    <h3>How to use this prompt:</h3>
+                    <ol>
+                        <li>Copy the generated prompt above</li>
+                        <li>Paste it into one of the AI models below</li>
+                        <li>Copy the generated JSON from the AI response</li>
+                        <li>Paste the JSON into the quiz input field above</li>
+                    </ol>
+                </div>
+                <div class="ai-links">
+                    <a href="https://chat.openai.com/" target="_blank" class="ai-link">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT">
+                        ChatGPT
+                    </a>
+                    <a href="https://claude.ai/" target="_blank" class="ai-link">
+                        <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/claude-ai-icon.png" alt="Claude">
+                        Claude
+                    </a>
+                    <a href="https://gemini.google.com/" target="_blank" class="ai-link">
+                        <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png" alt="Gemini">
+                        Gemini
+                    </a>
+                </div>
             </div>
         </div>
 

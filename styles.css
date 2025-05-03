@@ -185,45 +185,140 @@ body {
     width: 90%;
     max-width: 600px;
     z-index: 1000;
-    background: var(--dialog-bg);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .dialog-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dialog-header h2 {
+    margin: 0;
+    color: var(--text-color);
 }
 
 .dialog-content {
-    color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .input-group {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 8px;
+    color: var(--text-color);
     font-weight: 500;
 }
 
-.input-group input[type="text"],
-.input-group input[type="number"],
+.input-group input,
 .input-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background: white;
-    font-size: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
 }
 
 .input-group textarea {
-    height: 150px;
+    min-height: 100px;
     resize: vertical;
+}
+
+.prompt-instructions {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.prompt-instructions h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.prompt-instructions ol {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: var(--text-color);
+}
+
+.prompt-instructions li {
+    margin: 0.25rem 0;
+}
+
+.ai-links {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.ai-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    min-width: 100px;
+}
+
+.ai-link:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.ai-link img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.5rem;
+    object-fit: contain;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.dialog-actions button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.dialog-actions button:first-child {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.dialog-actions button:last-child {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.dialog-actions button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
 }
 
 .quiz-dialog {
@@ -335,4 +430,71 @@ body {
 
 #doneBtn:hover {
     background: #27ae60;
+}
+
+@media (max-width: 768px) {
+    .prompt-dialog {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .dialog-content {
+        padding: 0.5rem;
+    }
+
+    .input-group input,
+    .input-group textarea {
+        padding: 0.5rem;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .ai-links {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ai-link {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 0.75rem;
+        min-width: auto;
+    }
+
+    .ai-link img {
+        margin-right: 0.5rem;
+        margin-bottom: 0;
+    }
+
+    .dialog-actions {
+        flex-direction: column;
+    }
+
+    .dialog-actions button {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+
+    .prompt-instructions {
+        padding: 0.75rem;
+    }
+
+    .prompt-instructions ol {
+        padding-left: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dialog-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .dialog-header .btn-icon {
+        align-self: flex-end;
+    }
+
+    .input-group label {
+        font-size: 0.9rem;
+    }
 }

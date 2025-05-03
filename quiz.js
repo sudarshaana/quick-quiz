@@ -16,6 +16,7 @@ class Quiz {
         this.overlay = document.getElementById('overlay');
         this.promptDialog = document.getElementById('promptDialog');
         this.closePromptDialogBtn = document.getElementById('closePromptDialog');
+        this.cancelPromptBtn = document.getElementById('cancelPromptBtn');
         this.topicInput = document.getElementById('topic');
         this.questionCountInput = document.getElementById('questionCount');
         this.generatedPrompt = document.getElementById('generatedPrompt');
@@ -40,6 +41,7 @@ class Quiz {
         this.generateBtn.addEventListener('click', () => this.startQuiz());
         this.promptGeneratorBtn.addEventListener('click', () => this.openPromptDialog());
         this.closePromptDialogBtn.addEventListener('click', () => this.closePromptDialog());
+        this.cancelPromptBtn.addEventListener('click', () => this.closePromptDialog());
         this.topicInput.addEventListener('input', () => this.generatePrompt());
         this.questionCountInput.addEventListener('input', () => this.generatePrompt());
         this.copyPromptBtn.addEventListener('click', () => this.copyPrompt());
